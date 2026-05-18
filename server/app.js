@@ -34,10 +34,15 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      
+      // Auto-allow any production vercel.app frontend deployment
+      const isVercel = origin.endsWith('.vercel.app');
+      const isAllowed = allowedOrigins.includes(origin) || isVercel;
+      
+      if (isAllowed) {
         return callback(null, true);
       } else {
-        return callback(new Error('Not allowed by CORS'));
+        return callback(new Error(`Not allowed by CORS: ${origin}`));
       }
     },
     credentials: true,
