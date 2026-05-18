@@ -26,6 +26,8 @@ if (process.env.CLIENT_URL) {
   allowedOrigins.push(process.env.CLIENT_URL);
   allowedOrigins.push(process.env.CLIENT_URL.replace(/\/$/, '')); // Remove trailing slash if present
 }
+console.log('📡 CORS Diagnostic: CLIENT_URL =', process.env.CLIENT_URL);
+console.log('📡 CORS Diagnostic: allowedOrigins =', allowedOrigins);
 
 app.use(
   cors({
